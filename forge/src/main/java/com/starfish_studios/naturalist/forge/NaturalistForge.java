@@ -3,9 +3,9 @@ package com.starfish_studios.naturalist.forge;
 import com.starfish_studios.naturalist.Naturalist;
 import com.starfish_studios.naturalist.common.entity.*;
 import com.starfish_studios.naturalist.core.platform.forge.CommonPlatformHelperImpl;
-import com.starfish_studios.naturalist.core.registry.NaturalistBlocks;
+import com.starfish_studios.naturalist.core.registry.NaturalistRegistry;
 import com.starfish_studios.naturalist.core.registry.NaturalistEntityTypes;
-import com.starfish_studios.naturalist.core.registry.NaturalistItems;
+import com.starfish_studios.naturalist.core.registry.NaturalistRegistry;
 import com.starfish_studios.naturalist.registry.forge.NaturalistBiomeModifiers;
 import com.starfish_studios.naturalist.registry.forge.NaturalistConfigForge;
 import net.minecraft.world.entity.animal.AbstractFish;
@@ -58,8 +58,8 @@ public class NaturalistForge {
     }
 
     private void register(final FMLLoadCompleteEvent event) {
-        NaturalistBlocks.addAllToCreativeTab();
-        NaturalistItems.addAllToCreativeTab();
+        NaturalistRegistry.addAllToCreativeTab();
+        NaturalistRegistry.addAllToCreativeTab();
     }
 
     private void createAttributes(EntityAttributeCreationEvent event) {

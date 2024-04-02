@@ -37,8 +37,8 @@ public class LizardModel extends GeoModel<Lizard> {
     }
 
     @Override
-    public void setCustomAnimations(Lizard animatable, long instanceId, AnimationState<Lizard> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
+    public void setCustomAnimations(Lizard entity, long instanceId, AnimationState<Lizard> animationState) {
+        super.setCustomAnimations(entity, instanceId, animationState);
 
         if (animationState == null) return;
 
@@ -54,6 +54,6 @@ public class LizardModel extends GeoModel<Lizard> {
         head.setRotX(extraDataOfType.headPitch() * Mth.DEG_TO_RAD);
         head.setRotY(extraDataOfType.netHeadYaw() * Mth.DEG_TO_RAD);
 
-        tail.setHidden(!animatable.hasTail());
+        tail.setHidden(!entity.hasTail());
     }
 }

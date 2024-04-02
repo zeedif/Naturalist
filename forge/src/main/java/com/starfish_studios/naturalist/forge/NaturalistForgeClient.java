@@ -6,7 +6,7 @@ import com.starfish_studios.naturalist.client.model.ZebraModel;
 import com.starfish_studios.naturalist.client.renderer.ZebraRenderer;
 import com.starfish_studios.naturalist.core.registry.*;
 import com.starfish_studios.naturalist.core.registry.NaturalistEntityTypes;
-import com.starfish_studios.naturalist.core.registry.NaturalistItems;
+import com.starfish_studios.naturalist.core.registry.NaturalistRegistry;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.nbt.CompoundTag;
@@ -24,7 +24,7 @@ public class NaturalistForgeClient {
         NaturalistClient.init();
         registerEntityRenderers();
 
-        ItemProperties.register(NaturalistItems.BUTTERFLY.get(), new ResourceLocation("variant"), (stack, world, entity, num) -> {
+        ItemProperties.register(NaturalistRegistry.BUTTERFLY.get(), new ResourceLocation("variant"), (stack, world, entity, num) -> {
             CompoundTag compoundTag = stack.getTag();
             if (compoundTag != null && compoundTag.contains("Variant")) {
                 return (float)compoundTag.getInt("Variant") / 5;
@@ -32,7 +32,7 @@ public class NaturalistForgeClient {
             return 0.2F;
         });
 
-        ItemProperties.register(NaturalistItems.SNAIL_BUCKET.get(), new ResourceLocation("color"), (stack, world, entity, num) -> {
+        ItemProperties.register(NaturalistRegistry.SNAIL_BUCKET.get(), new ResourceLocation("color"), (stack, world, entity, num) -> {
             CompoundTag compoundTag = stack.getTag();
             if (compoundTag != null && compoundTag.contains("Color")) {
                 return (float)compoundTag.getInt("Color") / 15;
@@ -40,7 +40,7 @@ public class NaturalistForgeClient {
             return 0.8F;
         });
 
-        /* ItemProperties.register(NaturalistItems.MOTH.get(), new ResourceLocation("variant"), (stack, world, entity, num) -> {
+        /* ItemProperties.register(NaturalistRegistry.MOTH.get(), new ResourceLocation("variant"), (stack, world, entity, num) -> {
             CompoundTag compoundTag = stack.getTag();
             if (compoundTag != null && compoundTag.contains("Variant")) {
                 return (float)compoundTag.getInt("Variant") / 2;

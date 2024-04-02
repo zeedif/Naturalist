@@ -65,7 +65,7 @@ public class GlowGoopBlock extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public @NotNull ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-        return NaturalistItems.GLOW_GOOP.get().asItem().getDefaultInstance();
+        return NaturalistRegistry.GLOW_GOOP.get().asItem().getDefaultInstance();
     }
 
     @Override
@@ -94,7 +94,7 @@ public class GlowGoopBlock extends Block implements SimpleWaterloggedBlock {
                 this.decreaseGoop(level, pos, state);
                 int goop = state.getValue(GOOP);
                 for (int i = 0; i < goop; i++) {
-                    popResource(level, pos, new ItemStack(NaturalistItems.GLOW_GOOP.get()));
+                    popResource(level, pos, new ItemStack(NaturalistRegistry.GLOW_GOOP.get()));
                 }
             }
         }
@@ -116,7 +116,7 @@ public class GlowGoopBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return context.isHoldingItem(NaturalistItems.GLOW_GOOP.get()) ? Shapes.block() : Shapes.empty();
+        return context.isHoldingItem(NaturalistRegistry.GLOW_GOOP.get()) ? Shapes.block() : Shapes.empty();
     }
 
     public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {

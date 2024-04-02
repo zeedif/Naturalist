@@ -426,7 +426,7 @@ public class Bird extends ShoulderRidingEntity implements FlyingAnimal, GeoEntit
         public void tick() {
             this.bird.setPecking(true);
             if(this.bird.getRandom().nextInt(100) <= 25 ) {
-                ItemStack worm = new ItemStack(NaturalistItems.WORM.get());
+                ItemStack worm = new ItemStack(NaturalistRegistry.WORM.get());
                 this.bird.spawnAtLocation(worm);
                 this.bird.playSound(SoundEvents.ITEM_PICKUP);
                 this.bird.setPecking(false);

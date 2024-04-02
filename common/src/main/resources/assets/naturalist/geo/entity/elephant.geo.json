@@ -3,7 +3,7 @@
 	"minecraft:geometry": [
 		{
 			"description": {
-				"identifier": "geometry.unknown",
+				"identifier": "geometry.sf_nba.elephant",
 				"texture_width": 256,
 				"texture_height": 256,
 				"visible_bounds_width": 7,
@@ -52,7 +52,10 @@
 					"pivot": [0, 45, -22.33333],
 					"cubes": [
 						{"origin": [-10, 39, -38], "size": [20, 23, 18], "uv": [0, 79]}
-					]
+					],
+					"locators": {
+						"lead": [0, 43, -24]
+					}
 				},
 				{
 					"name": "lower_face",

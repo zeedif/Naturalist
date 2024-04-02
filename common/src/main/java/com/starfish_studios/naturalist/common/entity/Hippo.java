@@ -2,6 +2,9 @@ package com.starfish_studios.naturalist.common.entity;
 
 import com.starfish_studios.naturalist.common.entity.core.ai.goal.BabyHurtByTargetGoal;
 import com.starfish_studios.naturalist.common.entity.core.ai.goal.BabyPanicGoal;
+import com.starfish_studios.naturalist.common.entity.core.ai.goal.DistancedFollowParentGoal;
+import com.starfish_studios.naturalist.common.entity.core.ai.goal.SmoothFloatGoal;
+import com.starfish_studios.naturalist.common.entity.core.ai.navigation.MMPathNavigatorGround;
 import com.starfish_studios.naturalist.core.registry.NaturalistEntityTypes;
 import com.starfish_studios.naturalist.core.registry.NaturalistSoundEvents;
 import net.minecraft.core.BlockPos;
@@ -24,6 +27,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -35,6 +39,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Path;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -49,6 +54,14 @@ import java.util.EnumSet;
 import java.util.List;
 
 public class Hippo extends Animal implements GeoEntity {
+
+    protected static final RawAnimation IDLE = RawAnimation.begin().thenLoop("animation.sf_nba.hippo.idle");
+    protected static final RawAnimation WALK = RawAnimation.begin().thenLoop("animation.sf_nba.hippo.walk");
+    protected static final RawAnimation RUN = RawAnimation.begin().thenLoop("animation.sf_nba.hippo.run");
+    protected static final RawAnimation BITE = RawAnimation.begin().thenPlay("animation.sf_nba.hippo.bite");
+    protected static final RawAnimation SWIM = RawAnimation.begin().thenLoop("animation.sf_nba.hippo.swim");
+    protected static final RawAnimation SWIM_IDLE = RawAnimation.begin().thenLoop("animation.sf_nba.hippo.swim_idle");
+
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
     private static final Ingredient FOOD_ITEMS = Ingredient.of(Blocks.MELON.asItem());
     private int eatingTicks;
@@ -59,20 +72,21 @@ public class Hippo extends Animal implements GeoEntity {
         this.setMaxUpStep(1.0f);
     }
 
+    @Override
+    protected @NotNull PathNavigation createNavigation(@NotNull Level level) {
+        return new MMPathNavigatorGround(this, level);
+    }
+
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 40.0D).add(Attributes.FOLLOW_RANGE, 20.0D).add(Attributes.MOVEMENT_SPEED, 0.25D).add(Attributes.ATTACK_DAMAGE, 6.0D).add(Attributes.KNOCKBACK_RESISTANCE, 0.6D);
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 40.0D)
+                .add(Attributes.FOLLOW_RANGE, 20.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D)
+                .add(Attributes.ATTACK_DAMAGE, 6.0D)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.6D);
     }
 
     public static boolean checkHippoSpawnRules(EntityType<? extends Animal> entityType, LevelAccessor levelAccessor, MobSpawnType mobSpawnType, BlockPos blockPos, RandomSource randomSource) {
-        /* if (levelAccessor.getBlockState(blockPos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && Animal.isBrightEnoughToSpawn(levelAccessor, blockPos)) {
-            for (Direction direction : Direction.Plane.HORIZONTAL) {
-                return levelAccessor.getFluidState(blockPos.below().relative(direction)).is(FluidTags.WATER);
-            }
-        }
-        return false; */
-
-        // THIS CRASHES
-
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
         if (levelAccessor.getBlockState(blockPos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && Animal.isBrightEnoughToSpawn(levelAccessor, blockPos)) {
             for (int x = -16; x <= 16; x++) {
@@ -104,18 +118,28 @@ public class Hippo extends Animal implements GeoEntity {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(0, new SmoothFloatGoal(this));
         this.goalSelector.addGoal(1, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(2, new TemptGoal(this, 1.0D, FOOD_ITEMS, false));
         this.goalSelector.addGoal(3, new HippoAttackBoatsGoal(this, 1.25D));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.25D, true));
         this.goalSelector.addGoal(5, new BabyPanicGoal(this, 2.0D));
-        this.goalSelector.addGoal(6, new FollowParentGoal(this, 1.25D));
+        this.goalSelector.addGoal(6, new DistancedFollowParentGoal(this, 1.25D, 8.0D, 2.0D, 5.0D));
         this.goalSelector.addGoal(7, new RandomSwimmingGoal(this, 1.0D, 10));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new BabyHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, (entity) -> !this.isBaby() && entity.isInWater()));
+    }
+
+    @Override
+    public void customServerAiStep() {
+        if (this.getMoveControl().hasWanted()) {
+            this.setSprinting(this.getMoveControl().getSpeedModifier() >= 1.0D);
+        } else {
+            this.setSprinting(false);
+        }
+        super.customServerAiStep();
     }
 
     @Override
@@ -162,7 +186,21 @@ public class Hippo extends Animal implements GeoEntity {
 
     @Override
     public double getFluidJumpThreshold() {
-        return this.isBaby() ? super.getFluidJumpThreshold() : 1.25;
+        if (this.isBaby()) {
+            return 0.2F;
+        } else {
+            return 1.0F;
+        }
+    }
+
+    @Override
+    public @NotNull EntityDimensions getDimensions(Pose pose) {
+        if (this.isBaby()) {
+            return super.getDimensions(pose).scale(1.5F);
+
+        } else {
+            return super.getDimensions(pose);
+        }
     }
 
     @Override
@@ -198,12 +236,24 @@ public class Hippo extends Animal implements GeoEntity {
     }
 
     private <E extends Hippo> PlayState predicate(final AnimationState<E> event) {
+        event.getController().setAnimationSpeed(0.8D + event.getLimbSwingAmount());
         if (this.getDeltaMovement().horizontalDistanceSqr() > 1.0E-6) {
-            event.getController().setAnimation(RawAnimation.begin().thenLoop("hippo.walk"));
-            event.getController().setAnimationSpeed(1.0D);
+            if (!this.isInWater()) {
+                if (this.isSprinting()) {
+                    event.getController().setAnimation(RUN);
+                } else {
+                    event.getController().setAnimation(WALK);
+                }
+            } else if (this.isInWater()) {
+                event.getController().setAnimation(SWIM);
+            }
+            return PlayState.CONTINUE;
         } else {
-            event.getController().setAnimation(RawAnimation.begin().thenLoop("hippo.idle"));
-            event.getController().setAnimationSpeed(1.0D);
+            if (this.isInWater()) {
+                event.getController().setAnimation(SWIM_IDLE);
+            } else {
+                event.getController().setAnimation(IDLE);
+            }
         }
         return PlayState.CONTINUE;
     }
@@ -212,7 +262,7 @@ public class Hippo extends Animal implements GeoEntity {
         if (this.swinging && event.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             event.getController().forceAnimationReset();
         
-            event.getController().setAnimation(RawAnimation.begin().thenPlay("hippo.bite"));
+            event.getController().setAnimation(BITE);
             this.swinging = false;
         }
         return PlayState.CONTINUE;
@@ -220,7 +270,7 @@ public class Hippo extends Animal implements GeoEntity {
 
     @Override
     public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", 10, this::predicate));
+        controllers.add(new AnimationController<>(this, "controller", 5, this::predicate));
         controllers.add(new AnimationController<>(this, "attackController", 0, this::attackPredicate));
     }
 

@@ -20,7 +20,7 @@ public class CaterpillarRenderer extends GeoEntityRenderer<Caterpillar> {
         this.shadowRadius = 0.3F;
     }
 
-   public RenderType getRenderType(Caterpillar animatable, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
+   public RenderType getRenderType(Caterpillar entity, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
         return RenderType.entityCutoutNoCull(textureLocation);
     }
 }

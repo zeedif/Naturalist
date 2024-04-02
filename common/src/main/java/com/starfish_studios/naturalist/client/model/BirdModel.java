@@ -44,8 +44,8 @@ public class BirdModel extends GeoModel<Bird> {
     }
 
     @Override
-    public void setCustomAnimations(Bird animatable, long instanceId, AnimationState<Bird> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
+    public void setCustomAnimations(Bird entity, long instanceId, AnimationState<Bird> animationState) {
+        super.setCustomAnimations(entity, instanceId, animationState);
 
         if (animationState == null) return;
 

@@ -101,7 +101,7 @@ public interface Catchable {
 
     static <T extends LivingEntity & Catchable> Optional<InteractionResult> catchAnimal(Player player, InteractionHand hand, T entity, boolean needsNet) {
         ItemStack itemStack = player.getItemInHand(hand);
-        if ((needsNet ? itemStack.getItem().equals(NaturalistItems.BUG_NET.get()) : itemStack.isEmpty()) && entity.isAlive()) {
+        if ((needsNet ? itemStack.getItem().equals(NaturalistRegistry.BUG_NET.get()) : itemStack.isEmpty()) && entity.isAlive()) {
             ItemStack caughtItemStack = entity.getCaughtItemStack();
             entity.saveToHandTag(caughtItemStack);
             if (needsNet) {

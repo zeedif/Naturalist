@@ -32,7 +32,7 @@ public class AlligatorEggBlock extends TurtleEggBlock {
             int i = state.getValue(HATCH);
             if (i < 2) {
                 level.playSound(null, pos, NaturalistSoundEvents.GATOR_EGG_CRACK.get(), SoundSource.BLOCKS, 0.7f, 0.9f + random.nextFloat() * 0.2f);
-                level.setBlock(pos, (BlockState)state.setValue(HATCH, i + 1), 2);
+                level.setBlock(pos, state.setValue(HATCH, i + 1), 2);
             } else {
                 level.playSound(null, pos, NaturalistSoundEvents.GATOR_EGG_HATCH.get(), SoundSource.BLOCKS, 0.7f, 0.9f + random.nextFloat() * 0.2f);
                 level.removeBlock(pos, false);

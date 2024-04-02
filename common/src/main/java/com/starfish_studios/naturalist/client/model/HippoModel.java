@@ -26,19 +26,19 @@ public class HippoModel extends GeoModel<Hippo> {
 
     @Override
     public ResourceLocation getAnimationResource(Hippo hippo) {
-        return new ResourceLocation(Naturalist.MOD_ID, "animations/hippo.animation.json");
+        return new ResourceLocation(Naturalist.MOD_ID, "animations/hippo.rp_anim.json");
     }
 
     @Override
-    public void setCustomAnimations(Hippo animatable, long instanceId, AnimationState<Hippo> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
+    public void setCustomAnimations(Hippo entity, long instanceId, AnimationState<Hippo> animationState) {
+        super.setCustomAnimations(entity, instanceId, animationState);
 
         if (animationState == null) return;
 
         EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         CoreGeoBone head = this.getAnimationProcessor().getBone("head");
 
-        if (animatable.isBaby()) {
+        if (entity.isBaby()) {
             head.setScaleX(1.75F);
             head.setScaleY(1.75F);
             head.setScaleZ(1.75F);
@@ -48,7 +48,7 @@ public class HippoModel extends GeoModel<Hippo> {
             head.setScaleZ(1.0F);
         }
 
-        // head.setRotX(extraDataOfType.headPitch() * Mth.DEG_TO_RAD);  // Commented out as in the original code
+        head.setRotX(extraDataOfType.headPitch() * Mth.DEG_TO_RAD);
         head.setRotY(extraDataOfType.netHeadYaw() * Mth.DEG_TO_RAD);
     }
 }

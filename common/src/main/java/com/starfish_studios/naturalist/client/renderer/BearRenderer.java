@@ -26,28 +26,28 @@ public class BearRenderer extends GeoEntityRenderer<Bear> {
     }
 
     @Override
-    public void render(Bear animatable, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        if (animatable.isBaby()) {
+    public void render(Bear entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        if (entity.isBaby()) {
             poseStack.scale(0.5F, 0.5F, 0.5F);
         }
         else {
             poseStack.scale(1.0F, 1.0F, 1.0F);
         }
-        super.render(animatable, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 
     @Override
-    public void renderRecursively(PoseStack stack, Bear animatable, GeoBone bone, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight,
+    public void renderRecursively(PoseStack stack, Bear entity, GeoBone bone, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight,
         int packedOverlay, float red, float green, float blue, float alpha) {
         if (bone.getName().equals("snout")) {
             stack.pushPose();
             stack.mulPose(new Quaternionf(-0.7071f, 0.0f, 0.0f, 0.7071f));
             stack.translate(0.0D, 1.3D, 0.8D);
 //            stack.scale(1.0F,1.0F,1.0F);
-            Minecraft.getInstance().getItemRenderer().renderStatic(animatable.getItemBySlot(EquipmentSlot.MAINHAND), ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, packedLight, packedOverlay, stack, bufferSource, animatable.level(), 0);
+            Minecraft.getInstance().getItemRenderer().renderStatic(entity.getItemBySlot(EquipmentSlot.MAINHAND), ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, packedLight, packedOverlay, stack, bufferSource, animatable.level(), 0);
             stack.popPose();
-            buffer = bufferSource.getBuffer(RenderType.entityTranslucent(getTextureLocation(animatable)));
+            buffer = bufferSource.getBuffer(RenderType.entityTranslucent(getTextureLocation(entity)));
         }
-        super.renderRecursively(stack, animatable, bone, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+        super.renderRecursively(stack, entity, bone, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

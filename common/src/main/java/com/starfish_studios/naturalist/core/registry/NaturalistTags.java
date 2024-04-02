@@ -13,20 +13,13 @@ import net.minecraft.world.level.block.Block;
 
 public class NaturalistTags {
     public static class BlockTags {
-
-        public static final TagKey<Block> MOTHS_ATTRACTED_TO = tag("moths_attracted_to");
-
         public static final TagKey<Block> FIREFLIES_SPAWNABLE_ON = tag("fireflies_spawnable_on");
         public static final TagKey<Block> DRAGONFLIES_SPAWNABLE_ON = tag("dragonflies_spawnable_on");
         public static final TagKey<Block> BUTTERFLIES_SPAWNABLE_ON = tag("butterflies_spawnable_on");
         public static final TagKey<Block> VULTURES_SPAWNABLE_ON = tag("vultures_spawnable_on");
         public static final TagKey<Block> DUCKS_SPAWNABLE_ON = tag("ducks_spawnable_on");
-
-
         public static final TagKey<Block> RHINO_CHARGE_BREAKABLE = tag("rhino_charge_breakable");
         public static final TagKey<Block> VULTURE_PERCH_BLOCKS = tag("vulture_perch_blocks");
-
-
         public static final TagKey<Block> CATTAIL_PLACEABLE = tag("cattail_placeable");
         public static final TagKey<Block> ALLIGATOR_EGG_LAYABLE_ON = tag("alligator_egg_layable_on");
         public static final TagKey<Block> TORTOISE_EGG_LAYABLE_ON = tag("tortoise_egg_layable_on");
@@ -38,6 +31,11 @@ public class NaturalistTags {
     }
 
     public static class ItemTags {
+
+        public static final TagKey<Item> CRAB_FOOD = tag("crab_food");
+        public static final TagKey<Item> MOOSE_FOOD = tag("moose_food");
+        public static final TagKey<Item> CAPYBARA_FOOD = tag("capybara_food");
+        public static final TagKey<Item> PENGUIN_FOOD = tag("penguin_food");
 
         public static final TagKey<Item> HYENA_FOOD_ITEMS = tag("hyena_food_items");
         public static final TagKey<Item> OSTRICH_FOOD_ITEMS = tag("ostrich_food_items");

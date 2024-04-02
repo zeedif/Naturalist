@@ -24,16 +24,16 @@ public class TortoiseRenderer extends GeoEntityRenderer<Tortoise> {
     }
 
     @Override
-    public void render(Tortoise animatable, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        if (animatable.isBaby()) {
+    public void render(Tortoise entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        if (entity.isBaby()) {
             poseStack.scale(0.5F, 0.5F, 0.5F);
         }else{
             poseStack.scale(1.0F, 1.0F, 1.0F);
         }
-        super.render(animatable, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 
-   public RenderType getRenderType(Tortoise animatable, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
+   public RenderType getRenderType(Tortoise entity, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
         return RenderType.entityCutoutNoCull(textureLocation);
     }
 }

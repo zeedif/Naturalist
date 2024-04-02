@@ -31,15 +31,15 @@ public class AlligatorModel extends GeoModel<Alligator> {
     }
 
     @Override
-    public void setCustomAnimations(Alligator animatable, long instanceId, AnimationState<Alligator> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
+    public void setCustomAnimations(Alligator entity, long instanceId, AnimationState<Alligator> animationState) {
+        super.setCustomAnimations(entity, instanceId, animationState);
 
         if (animationState == null) return;
 
         EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         CoreGeoBone head = this.getAnimationProcessor().getBone("head");
 
-        if (animatable.isBaby()) {
+        if (entity.isBaby()) {
             head.setScaleX(1.5F);
             head.setScaleY(1.5F);
             head.setScaleZ(1.5F);

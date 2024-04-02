@@ -10,7 +10,7 @@ import net.minecraft.world.level.material.*;
 import java.util.function.*;
 
 public class NaturalistBlockEntities {
-    // public static final Supplier<BlockEntityType<AnimalCrateBlockEntity>> ANIMAL_CRATE = CommonPlatformHelper.registerBlockEntityType("animal_crate", () -> BlockEntityType.Builder.of(AnimalCrateBlockEntity::new, NaturalistBlocks.ANIMAL_CRATE.get()).build(null));
+    // public static final Supplier<BlockEntityType<AnimalCrateBlockEntity>> ANIMAL_CRATE = CommonPlatformHelper.registerBlockEntityType("animal_crate", () -> BlockEntityType.Builder.of(AnimalCrateBlockEntity::new, NaturalistRegistry.ANIMAL_CRATE.get()).build(null));
 
     public static void init() {
     }

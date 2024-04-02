@@ -31,7 +31,7 @@ public class NoFluidMobBucketWithVariantsItem extends NoFluidMobBucketItem {
             CompoundTag compoundnbt = stack.getTag();
             if (compoundnbt != null && compoundnbt.contains("Color", 3)) {
                 Snail.Color color = Snail.Color.getTypeById(compoundnbt.getInt("Color"));
-                tooltip.add((Component.translatable(String.format("tooltip.naturalist.%s", color.toString().toLowerCase())).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY)));
+                tooltip.add((Component.translatable(String.format("item.minecraft.firework_star.%s", color.toString().toLowerCase())).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY)));
             }
         }
     }

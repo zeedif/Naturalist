@@ -28,21 +28,21 @@ public class FireflyGlowLayer extends GeoRenderLayer<Firefly> {
     }
 
     @Override
-    public void render(PoseStack poseStack, Firefly animatable, BakedGeoModel bakedModel, RenderType renderType,
+    public void render(PoseStack poseStack, Firefly entity, BakedGeoModel bakedModel, RenderType renderType,
                        MultiBufferSource bufferSource, VertexConsumer buffer, float partialTicks,
                        int packedLightIn, int packedOverlay) {
-        RenderType top = animatable.isGlowing() ? RenderType.eyes(TOP_LAYER) : RenderType.entityCutoutNoCull(TOP_LAYER);
-        RenderType back = animatable.isGlowing() ? RenderType.eyes(BACK_LAYER) : RenderType.entityCutoutNoCull(BACK_LAYER);
-        RenderType bottom = animatable.isGlowing() ? RenderType.eyes(BOTTOM_LAYER) : RenderType.entityCutoutNoCull(BOTTOM_LAYER);
-        RenderType left = animatable.isGlowing() ? RenderType.eyes(LEFT_LAYER) : RenderType.entityCutoutNoCull(LEFT_LAYER);
-        RenderType right = animatable.isGlowing() ? RenderType.eyes(RIGHT_LAYER) : RenderType.entityCutoutNoCull(RIGHT_LAYER);
+        RenderType top = entity.isGlowing() ? RenderType.eyes(TOP_LAYER) : RenderType.entityCutoutNoCull(TOP_LAYER);
+        RenderType back = entity.isGlowing() ? RenderType.eyes(BACK_LAYER) : RenderType.entityCutoutNoCull(BACK_LAYER);
+        RenderType bottom = entity.isGlowing() ? RenderType.eyes(BOTTOM_LAYER) : RenderType.entityCutoutNoCull(BOTTOM_LAYER);
+        RenderType left = entity.isGlowing() ? RenderType.eyes(LEFT_LAYER) : RenderType.entityCutoutNoCull(LEFT_LAYER);
+        RenderType right = entity.isGlowing() ? RenderType.eyes(RIGHT_LAYER) : RenderType.entityCutoutNoCull(RIGHT_LAYER);
 
         // poseStack.pushPose();
-        getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, top, bufferSource.getBuffer(top), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-        getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, back, bufferSource.getBuffer(back), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-        getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, bottom, bufferSource.getBuffer(bottom), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-        getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, left, bufferSource.getBuffer(left), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-        getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, right, bufferSource.getBuffer(right), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        getRenderer().reRender(getDefaultBakedModel(entity), poseStack, bufferSource, entity, top, bufferSource.getBuffer(top), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        getRenderer().reRender(getDefaultBakedModel(entity), poseStack, bufferSource, entity, back, bufferSource.getBuffer(back), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        getRenderer().reRender(getDefaultBakedModel(entity), poseStack, bufferSource, entity, bottom, bufferSource.getBuffer(bottom), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        getRenderer().reRender(getDefaultBakedModel(entity), poseStack, bufferSource, entity, left, bufferSource.getBuffer(left), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        getRenderer().reRender(getDefaultBakedModel(entity), poseStack, bufferSource, entity, right, bufferSource.getBuffer(right), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
         // poseStack.popPose();
     }
 }

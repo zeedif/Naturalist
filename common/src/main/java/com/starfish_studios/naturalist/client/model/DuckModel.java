@@ -35,15 +35,15 @@ public class DuckModel extends GeoModel<Duck> {
     }
 
     @Override
-    public void setCustomAnimations(Duck animatable, long instanceId, AnimationState<Duck> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
+    public void setCustomAnimations(Duck entity, long instanceId, AnimationState<Duck> animationState) {
+        super.setCustomAnimations(entity, instanceId, animationState);
 
         if (animationState == null) return;
 
         EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         CoreGeoBone head = this.getAnimationProcessor().getBone("head");
 
-        if (animatable.isBaby()) {
+        if (entity.isBaby()) {
             head.setScaleX(1.7F);
             head.setScaleY(1.7F);
             head.setScaleZ(1.7F);

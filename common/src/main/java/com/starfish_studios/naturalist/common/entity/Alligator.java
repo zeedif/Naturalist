@@ -2,6 +2,7 @@ package com.starfish_studios.naturalist.common.entity;
 
 import com.starfish_studios.naturalist.common.entity.core.EggLayingAnimal;
 import com.starfish_studios.naturalist.common.entity.core.ai.goal.*;
+import com.starfish_studios.naturalist.common.entity.core.ai.navigation.MMPathNavigatorGround;
 import com.starfish_studios.naturalist.core.registry.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -52,6 +54,11 @@ public class Alligator extends Animal implements GeoEntity, EggLayingAnimal {
         super(entityType, level);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0f);
         this.setMaxUpStep(1.0F);
+    }
+
+    @Override
+    protected @NotNull PathNavigation createNavigation(@NotNull Level level) {
+        return new MMPathNavigatorGround(this, level);
     }
 
     public static boolean checkAlligatorSpawnRules(EntityType<? extends Alligator> type, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
@@ -88,7 +95,11 @@ public class Alligator extends Animal implements GeoEntity, EggLayingAnimal {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 0.2).add(Attributes.MAX_HEALTH, 30.0).add(Attributes.ATTACK_DAMAGE, 6.0).add(Attributes.KNOCKBACK_RESISTANCE, 0.60);
+        return Mob.createMobAttributes()
+                .add(Attributes.MOVEMENT_SPEED, 0.2)
+                .add(Attributes.MAX_HEALTH, 30.0)
+                .add(Attributes.ATTACK_DAMAGE, 6.0)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.60);
     }
 
     @Override
@@ -110,7 +121,7 @@ public class Alligator extends Animal implements GeoEntity, EggLayingAnimal {
             Iterable<BlockPos> list = BlockPos.betweenClosed(entity.blockPosition().offset(-2, -2, -2), entity.blockPosition().offset(2, 2, 2));
             boolean isEntityNearAlligatorEggs = false;
             for (BlockPos pos : list) {
-                if (level().getBlockState(pos).is(NaturalistBlocks.ALLIGATOR_EGG.get())) {
+                if (level().getBlockState(pos).is(NaturalistRegistry.ALLIGATOR_EGG.get())) {
                     isEntityNearAlligatorEggs = true;
                     break;
                 }
@@ -153,7 +164,7 @@ public class Alligator extends Animal implements GeoEntity, EggLayingAnimal {
 
     @Override
     public Block getEggBlock() {
-        return NaturalistBlocks.ALLIGATOR_EGG.get();
+        return NaturalistRegistry.ALLIGATOR_EGG.get();
     }
 
     @Override

@@ -26,12 +26,12 @@ public class ElephantModel extends GeoModel<Elephant> {
 
     @Override
     public ResourceLocation getAnimationResource(Elephant elephant) {
-        return new ResourceLocation(Naturalist.MOD_ID, "animations/elephant.animation.json");
+        return new ResourceLocation(Naturalist.MOD_ID, "animations/elephant.rp_anim.json");
     }
 
     @Override
-    public void setCustomAnimations(Elephant animatable, long instanceId, AnimationState<Elephant> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
+    public void setCustomAnimations(Elephant entity, long instanceId, AnimationState<Elephant> animationState) {
+        super.setCustomAnimations(entity, instanceId, animationState);
 
         if (animationState == null) return;
 
@@ -43,23 +43,23 @@ public class ElephantModel extends GeoModel<Elephant> {
         CoreGeoBone leftEar = this.getAnimationProcessor().getBone("left_ear");
         CoreGeoBone rightEar = this.getAnimationProcessor().getBone("right_ear");
 
-        if (animatable.isBaby()) {
+        if (entity.isBaby()) {
             head.setScaleX(1.3F); head.setScaleY(1.3F); head.setScaleZ(1.3F);
             leftEar.setScaleX(1.2F); leftEar.setScaleY(1.2F); leftEar.setScaleZ(1.2F);
             rightEar.setScaleX(1.2F); rightEar.setScaleY(1.2F); rightEar.setScaleZ(1.2F);
+            smallTusks.setHidden(false);
+            bigTusks.setHidden(true);
+            babyTrunk.setHidden(true);
         } else {
             head.setScaleX(1.0F);
             head.setScaleY(1.0F);
             head.setScaleZ(1.0F);
             leftEar.setScaleX(1.0F); leftEar.setScaleY(1.0F); leftEar.setScaleZ(1.0F);
             rightEar.setScaleX(1.0F); rightEar.setScaleY(1.0F); rightEar.setScaleZ(1.0F);
+            smallTusks.setHidden(true);
+            bigTusks.setHidden(false);
+            babyTrunk.setHidden(false);
         }
-
-        bigTusks.setHidden(animatable.isBaby());
-        smallTusks.setHidden(animatable.isBaby());
-        smallTusks.setHidden(!animatable.isBaby());
-
-        babyTrunk.setHidden(animatable.isBaby());
 
         head.setRotX(extraDataOfType.headPitch() * Mth.DEG_TO_RAD);
         head.setRotY(extraDataOfType.netHeadYaw() * Mth.DEG_TO_RAD);

@@ -46,14 +46,13 @@ import java.util.function.Consumer;
 
 public class Naturalist {
     public static final String MOD_ID = "naturalist";
-    public static final CreativeModeTab TAB = CommonPlatformHelper.registerCreativeModeTab(new ResourceLocation(MOD_ID, "tab"), () -> new ItemStack(NaturalistBlocks.TEDDY_BEAR.get()));
+    public static final CreativeModeTab TAB = CommonPlatformHelper.registerCreativeModeTab(new ResourceLocation(MOD_ID, "tab"), () -> new ItemStack(NaturalistRegistry.BUG_NET.get()));
     public static final ResourceKey<CreativeModeTab> TAB_KEY = ResourceKey.create(Registries.CREATIVE_MODE_TAB, new ResourceLocation(MOD_ID, "tab"));
     public static final Logger LOGGER = LogManager.getLogger();
 
     public static void init() {
         GeckoLib.initialize();
-        NaturalistBlocks.init();
-        NaturalistItems.init();
+        NaturalistRegistry.init();
         NaturalistBlockEntities.init();
         NaturalistSoundEvents.init();
         NaturalistEntityTypes.init();
@@ -61,7 +60,7 @@ public class Naturalist {
     }
 
     public static void registerDispenserBehaviors() {
-        DispenserBlock.registerBehavior(NaturalistItems.DUCK_EGG.get(), new AbstractProjectileDispenseBehavior() {
+        DispenserBlock.registerBehavior(NaturalistRegistry.DUCK_EGG.get(), new AbstractProjectileDispenseBehavior() {
             protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
                 return Util.make(new ThrownDuckEgg(level, position.x(), position.y(), position.z()), (thrownDuckEgg) -> {
                     thrownDuckEgg.setItem(stack);
@@ -83,12 +82,12 @@ public class Naturalist {
                 }
             }
         };
-        DispenserBlock.registerBehavior(NaturalistItems.SNAIL_BUCKET.get(), dispenseItemBehavior);
-        DispenserBlock.registerBehavior(NaturalistItems.BASS_BUCKET.get(), dispenseItemBehavior);
-        DispenserBlock.registerBehavior(NaturalistItems.CATFISH_BUCKET.get(), dispenseItemBehavior);
+        DispenserBlock.registerBehavior(NaturalistRegistry.SNAIL_BUCKET.get(), dispenseItemBehavior);
+        DispenserBlock.registerBehavior(NaturalistRegistry.BASS_BUCKET.get(), dispenseItemBehavior);
+        DispenserBlock.registerBehavior(NaturalistRegistry.CATFISH_BUCKET.get(), dispenseItemBehavior);
 
 
-        DispenserBlock.registerBehavior(NaturalistItems.SNAIL_BUCKET.get(), new DefaultDispenseItemBehavior() {
+        DispenserBlock.registerBehavior(NaturalistRegistry.SNAIL_BUCKET.get(), new DefaultDispenseItemBehavior() {
             public ItemStack execute(BlockSource source, ItemStack stack) {
                 Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
                 BlockPos blockPos = source.getPos().relative(direction);
@@ -102,7 +101,7 @@ public class Naturalist {
                 return stack;
             }
         });
-        DispenserBlock.registerBehavior(NaturalistItems.BUTTERFLY.get(), new DefaultDispenseItemBehavior() {
+        DispenserBlock.registerBehavior(NaturalistRegistry.BUTTERFLY.get(), new DefaultDispenseItemBehavior() {
             public ItemStack execute(BlockSource source, ItemStack stack) {
                 Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
                 BlockPos blockPos = source.getPos().relative(direction);
@@ -119,7 +118,7 @@ public class Naturalist {
     }
     
     public static void registerBrewingRecipes() {
-        CommonPlatformHelper.registerBrewingRecipe(Potions.AWKWARD, NaturalistItems.ANTLER.get(), NaturalistPotions.FOREST_DASHER.get());
+        CommonPlatformHelper.registerBrewingRecipe(Potions.AWKWARD, NaturalistRegistry.ANTLER.get(), NaturalistPotions.FOREST_DASHER.get());
         CommonPlatformHelper.registerBrewingRecipe(NaturalistPotions.FOREST_DASHER.get(), Items.REDSTONE, NaturalistPotions.LONG_FOREST_DASHER.get());
         CommonPlatformHelper.registerBrewingRecipe(NaturalistPotions.FOREST_DASHER.get(), Items.GLOWSTONE_DUST, NaturalistPotions.STRONG_FOREST_DASHER.get());
     }
@@ -162,6 +161,6 @@ public class Naturalist {
 
 
     public static void registerCompostables() {
-        CommonPlatformHelper.registerCompostable(0.65F, NaturalistItems.SNAIL_SHELL.get());
+        CommonPlatformHelper.registerCompostable(0.65F, NaturalistRegistry.SNAIL_SHELL.get());
     }
 }

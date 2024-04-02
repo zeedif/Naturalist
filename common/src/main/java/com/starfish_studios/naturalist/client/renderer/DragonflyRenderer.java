@@ -20,7 +20,7 @@ public class DragonflyRenderer extends GeoEntityRenderer<Dragonfly> {
         this.shadowRadius = 0.4F;
     }
 
-   public RenderType getRenderType(Dragonfly animatable, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
+   public RenderType getRenderType(Dragonfly entity, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
         return RenderType.entityCutoutNoCull(textureLocation);
     }
 }

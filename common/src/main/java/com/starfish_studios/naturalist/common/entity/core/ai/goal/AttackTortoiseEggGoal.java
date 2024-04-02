@@ -1,6 +1,6 @@
 package com.starfish_studios.naturalist.common.entity.core.ai.goal;
 
-import com.starfish_studios.naturalist.core.registry.NaturalistBlocks;
+import com.starfish_studios.naturalist.core.registry.NaturalistRegistry;
 import com.starfish_studios.naturalist.core.registry.NaturalistSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.Block;
 
 public class AttackTortoiseEggGoal extends RemoveBlockGoal {
     public AttackTortoiseEggGoal(Block block, PathfinderMob pathfinderMob, double d, int i) {
-        super(NaturalistBlocks.TORTOISE_EGG.get(), pathfinderMob, d, i);
+        super(NaturalistRegistry.TORTOISE_EGG.get(), pathfinderMob, d, i);
     }
     public void playDestroyProgressSound(LevelAccessor level, BlockPos pos) {
         level.playSound(null, pos, SoundEvents.ZOMBIE_DESTROY_EGG, SoundSource.HOSTILE, 0.5F, 0.9F + level.getRandom().nextFloat() * 0.2F);

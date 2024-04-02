@@ -22,7 +22,7 @@ public class FireflyRenderer extends GeoEntityRenderer<Firefly> {
         this.addRenderLayer(new FireflyGlowLayer(this));
     }
 
-   public RenderType getRenderType(Firefly animatable, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
+   public RenderType getRenderType(Firefly entity, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
         return RenderType.entityCutoutNoCull(textureLocation);
     }
 }

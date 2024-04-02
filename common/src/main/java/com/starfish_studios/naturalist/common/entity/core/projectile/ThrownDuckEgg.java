@@ -66,6 +66,6 @@ public class ThrownDuckEgg extends ThrowableItemProjectile {
 
     @Override
     protected Item getDefaultItem() {
-        return NaturalistItems.DUCK_EGG.get();
+        return NaturalistRegistry.DUCK_EGG.get();
     }
 }

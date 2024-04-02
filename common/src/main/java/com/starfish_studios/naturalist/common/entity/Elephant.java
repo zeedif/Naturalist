@@ -3,6 +3,7 @@ package com.starfish_studios.naturalist.common.entity;
 import com.starfish_studios.naturalist.common.entity.core.ai.goal.BabyHurtByTargetGoal;
 import com.starfish_studios.naturalist.common.entity.core.ai.goal.BabyPanicGoal;
 import com.starfish_studios.naturalist.common.entity.core.ai.goal.DistancedFollowParentGoal;
+import com.starfish_studios.naturalist.common.entity.core.ai.navigation.MMPathNavigatorGround;
 import com.starfish_studios.naturalist.core.registry.NaturalistEntityTypes;
 import com.starfish_studios.naturalist.core.registry.NaturalistSoundEvents;
 import com.starfish_studios.naturalist.core.registry.NaturalistTags;
@@ -36,6 +37,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -49,6 +51,8 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class Elephant extends Animal implements NeutralMob, GeoEntity {
+    protected static final RawAnimation IDLE = RawAnimation.begin().thenLoop("animation.sf_nba.elephant.idle");
+    protected static final RawAnimation WALK = RawAnimation.begin().thenLoop("animation.sf_nba.elephant.walk");
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
     // private static final EntityDataAccessor<Integer> DIRTY_TICKS = SynchedEntityData.defineId(Elephant.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DRINKING = SynchedEntityData.defineId(Elephant.class, EntityDataSerializers.BOOLEAN);
@@ -64,7 +68,13 @@ public class Elephant extends Animal implements NeutralMob, GeoEntity {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 80.0D).add(Attributes.MOVEMENT_SPEED, 0.3D).add(Attributes.ATTACK_DAMAGE, 10.0D).add(Attributes.ATTACK_KNOCKBACK, 1.2).add(Attributes.KNOCKBACK_RESISTANCE, 0.75D).add(Attributes.FOLLOW_RANGE, 20.0D);
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 80.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D)
+                .add(Attributes.ATTACK_DAMAGE, 10.0D)
+                .add(Attributes.ATTACK_KNOCKBACK, 1.2)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.75D)
+                .add(Attributes.FOLLOW_RANGE, 10.0D);
     }
 
     @Override
@@ -88,9 +98,10 @@ public class Elephant extends Animal implements NeutralMob, GeoEntity {
         return NaturalistEntityTypes.ELEPHANT.get().create(serverLevel);
     }
 
+
     @Override
-    protected PathNavigation createNavigation(Level level) {
-        return new GroundPathNavigation(this, level);
+    protected @NotNull PathNavigation createNavigation(@NotNull Level level) {
+        return new MMPathNavigatorGround(this, level);
     }
 
     @Override
@@ -108,12 +119,12 @@ public class Elephant extends Animal implements NeutralMob, GeoEntity {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Bee.class, 8.0f, 1.3, 1.3));
-        this.goalSelector.addGoal(2, new ElephantMeleeAttackGoal(this, 1.2D, true));
+        this.goalSelector.addGoal(2, new ElephantMeleeAttackGoal(this, 1.0D, true));
         this.goalSelector.addGoal(3, new BabyPanicGoal(this, 1.3D));
-        this.goalSelector.addGoal(4, new DistancedFollowParentGoal(this, 1.25D, 24.0D, 6.0D, 12.0D));
+        this.goalSelector.addGoal(4, new DistancedFollowParentGoal(this, 1.2D, 24.0D, 6.0D, 12.0D));
         // this.goalSelector.addGoal(5, new ElephantDrinkWaterGoal(this));
         // this.goalSelector.addGoal(6, new ElephantMoveToWaterGoal(this, 1.0D, 8, 4));
-        this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0));
+        this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6.0f));
         this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new BabyHurtByTargetGoal(this));
@@ -249,19 +260,17 @@ public class Elephant extends Animal implements NeutralMob, GeoEntity {
         return this.geoCache;
     }
     private <E extends Elephant> PlayState predicate(final AnimationState<E> event) {
-        if (this.getDeltaMovement().horizontalDistanceSqr() > 1.0E-6) {
-            if (this.isSprinting()) {
-                event.getController().setAnimation(RawAnimation.begin().thenLoop("run"));
-                event.getController().setAnimationSpeed(1.2F);
-            } else {
-                event.getController().setAnimation(RawAnimation.begin().thenLoop("walk"));
-                event.getController().setAnimationSpeed(0.7F);
-            }
+        if (this.isBaby()) {
+            event.setControllerSpeed(1.3f + event.getLimbSwingAmount());
+        } else {
+            event.setControllerSpeed(1.0f + event.getLimbSwingAmount());
+        }
+        if (event.isMoving()) {
+            event.getController().setAnimation(WALK);
         } /*else if (this.isDrinking()) {
             event.getController().setAnimation(RawAnimation.begin().thenLoop("elephant.water"));
         }*/ else {
-            event.getController().setAnimation(RawAnimation.begin().thenLoop("idle"));
-            event.getController().setAnimationSpeed(0.5F);
+            event.getController().setAnimation(IDLE);
         }
         return PlayState.CONTINUE;
     }
@@ -279,7 +288,7 @@ public class Elephant extends Animal implements NeutralMob, GeoEntity {
     @Override
     public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
         // data.setResetSpeedInTicks(10);
-        controllers.add(new AnimationController<>(this, "controller", 10, this::predicate));
+        controllers.add(new AnimationController<>(this, "controller", 5, this::predicate));
         controllers.add(new AnimationController<>(this, "swingController", 0, this::swingPredicate));
     }
 

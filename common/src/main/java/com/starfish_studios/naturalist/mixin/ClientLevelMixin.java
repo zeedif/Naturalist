@@ -1,6 +1,6 @@
 package com.starfish_studios.naturalist.mixin;
 
-import com.starfish_studios.naturalist.core.registry.NaturalistItems;
+import com.starfish_studios.naturalist.core.registry.NaturalistRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.player.Player;
@@ -23,7 +23,7 @@ public abstract class ClientLevelMixin {
         Player player = instance.player;
         if (player != null) {
             Item item = player.getMainHandItem().getItem();
-            if (item instanceof BlockItem blockItem && item == NaturalistItems.GLOW_GOOP.get()) {
+            if (item instanceof BlockItem blockItem && item == NaturalistRegistry.GLOW_GOOP.get()) {
                 cir.setReturnValue(blockItem.getBlock());
             }
         }

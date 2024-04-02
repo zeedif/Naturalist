@@ -30,8 +30,8 @@ public class VultureModel extends GeoModel<Vulture> {
     }
 
     @Override
-    public void setCustomAnimations(Vulture animatable, long instanceId, AnimationState<Vulture> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
+    public void setCustomAnimations(Vulture entity, long instanceId, AnimationState<Vulture> animationState) {
+        super.setCustomAnimations(entity, instanceId, animationState);
 
         if (animationState == null) return;
 

@@ -34,8 +34,8 @@ public class DeerModel extends GeoModel<Deer> {
     }
 
     @Override
-    public void setCustomAnimations(Deer animatable, long instanceId, AnimationState<Deer> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
+    public void setCustomAnimations(Deer entity, long instanceId, AnimationState<Deer> animationState) {
+        super.setCustomAnimations(entity, instanceId, animationState);
 
         if (animationState == null) return;
 
@@ -43,7 +43,7 @@ public class DeerModel extends GeoModel<Deer> {
         CoreGeoBone head = this.getAnimationProcessor().getBone("head");
         CoreGeoBone antlers = this.getAnimationProcessor().getBone("antlers");
 
-        if (animatable.isBaby()) {
+        if (entity.isBaby()) {
             head.setScaleX(1.4F);
             head.setScaleY(1.4F);
             head.setScaleZ(1.4F);
@@ -56,9 +56,9 @@ public class DeerModel extends GeoModel<Deer> {
             head.setScaleZ(1.0F);
         }
 
-        antlers.setHidden(animatable.isBaby());
+        antlers.setHidden(entity.isBaby());
 
-        if (!animatable.isEating()) {
+        if (!entity.isEating()) {
             head.setRotX(extraDataOfType.headPitch() * Mth.DEG_TO_RAD);
             head.setRotY(extraDataOfType.netHeadYaw() * Mth.DEG_TO_RAD);
         }

@@ -37,8 +37,8 @@ public class SnakeModel extends GeoModel<Snake> {
     }
 
     @Override
-    public void setCustomAnimations(Snake animatable, long instanceId, AnimationState<Snake> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
+    public void setCustomAnimations(Snake entity, long instanceId, AnimationState<Snake> animationState) {
+        super.setCustomAnimations(entity, instanceId, animationState);
 
         if (animationState == null) return;
 
@@ -47,14 +47,14 @@ public class SnakeModel extends GeoModel<Snake> {
         CoreGeoBone tail2 = this.getAnimationProcessor().getBone("tail2");
         CoreGeoBone tail4 = this.getAnimationProcessor().getBone("tail4");
 
-        if (!animatable.isSleeping()) {
+        if (!entity.isSleeping()) {
             head.setRotX(extraDataOfType.headPitch() * Mth.DEG_TO_RAD);
             head.setRotY(extraDataOfType.netHeadYaw() * Mth.DEG_TO_RAD);
         }
-        if (!animatable.getMainHandItem().isEmpty()) {
+        if (!entity.getMainHandItem().isEmpty()) {
             tail2.setScaleX(1.5F);
             tail2.setScaleY(1.5F);
         }
-        tail4.setHidden(!animatable.getType().equals(NaturalistEntityTypes.RATTLESNAKE.get()));
+        tail4.setHidden(!entity.getType().equals(NaturalistEntityTypes.RATTLESNAKE.get()));
     }
 }

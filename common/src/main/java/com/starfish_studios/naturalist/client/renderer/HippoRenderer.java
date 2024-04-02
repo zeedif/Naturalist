@@ -25,21 +25,21 @@ public class HippoRenderer extends GeoEntityRenderer<Hippo> {
     }
 
     @Override
-    public void render(Hippo animatable, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        if (animatable.isBaby()) {
+    public void render(Hippo entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        if (entity.isBaby()) {
             poseStack.scale(0.5F, 0.5F, 0.5F);
         }else{
             poseStack.scale(1.0F, 1.0F, 1.0F);
         }
-        super.render(animatable, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 
-   public RenderType getRenderType(Hippo animatable, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
+   public RenderType getRenderType(Hippo entity, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
         return RenderType.entityCutoutNoCull(textureLocation);
     }
 
     @Override
-    public void renderRecursively(PoseStack stack, Hippo animatable, GeoBone bone, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight,
+    public void renderRecursively(PoseStack stack, Hippo entity, GeoBone bone, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight,
         int packedOverlay, float red, float green, float blue, float alpha) {
         if (bone.getName().equals("botjaw") && animatable.getMainHandItem().getItem() instanceof BlockItem blockItem) {
             stack.pushPose();
@@ -48,8 +48,8 @@ public class HippoRenderer extends GeoEntityRenderer<Hippo> {
             stack.scale(0.675F,0.675F,0.675F);
             Minecraft.getInstance().getBlockRenderer().renderSingleBlock(blockItem.getBlock().defaultBlockState(), stack, bufferSource, packedLight, packedOverlay);
             stack.popPose();
-            buffer = bufferSource.getBuffer(RenderType.entityTranslucent(getTextureLocation(animatable)));
+            buffer = bufferSource.getBuffer(RenderType.entityTranslucent(getTextureLocation(entity)));
         }
-        super.renderRecursively(stack, animatable, bone, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+        super.renderRecursively(stack, entity, bone, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

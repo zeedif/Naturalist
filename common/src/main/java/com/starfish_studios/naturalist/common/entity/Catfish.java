@@ -104,7 +104,7 @@ public class Catfish extends AbstractFish implements GeoEntity {
 
     @Override
     public ItemStack getBucketItemStack() {
-        return new ItemStack(NaturalistItems.CATFISH_BUCKET.get());
+        return new ItemStack(NaturalistRegistry.CATFISH_BUCKET.get());
     }
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {

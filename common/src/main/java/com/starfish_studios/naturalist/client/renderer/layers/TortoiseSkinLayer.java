@@ -25,11 +25,11 @@ public class TortoiseSkinLayer extends GeoRenderLayer<Tortoise> {
     }
 
     @Override
-    public void render(PoseStack poseStack, Tortoise animatable, BakedGeoModel bakedModel, RenderType renderType,
+    public void render(PoseStack poseStack, Tortoise entity, BakedGeoModel bakedModel, RenderType renderType,
                        MultiBufferSource bufferSource, VertexConsumer buffer, float partialTicks,
                        int packedLightIn, int packedOverlay) {
         poseStack.pushPose();
-        String name = ChatFormatting.stripFormatting(animatable.getName().getString());
+        String name = ChatFormatting.stripFormatting(entity.getName().getString());
         if(name == null) {
             poseStack.popPose();
             return;
@@ -46,7 +46,7 @@ public class TortoiseSkinLayer extends GeoRenderLayer<Tortoise> {
             return;
         }
         RenderType renderType2 = RenderType.entityCutoutNoCull(skin);
-        getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, renderType2, bufferSource.getBuffer(renderType), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        getRenderer().reRender(getDefaultBakedModel(entity), poseStack, bufferSource, entity, renderType2, bufferSource.getBuffer(renderType), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
         poseStack.popPose();
     }
 }

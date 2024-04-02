@@ -35,15 +35,15 @@ public class TortoiseModel extends GeoModel<Tortoise> {
     }
 
     @Override
-    public void setCustomAnimations(Tortoise animatable, long instanceId, AnimationState<Tortoise> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
+    public void setCustomAnimations(Tortoise entity, long instanceId, AnimationState<Tortoise> animationState) {
+        super.setCustomAnimations(entity, instanceId, animationState);
 
         if (animationState == null) return;
 
         EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         CoreGeoBone head = this.getAnimationProcessor().getBone("head");
 
-        if (animatable.isBaby()) {
+        if (entity.isBaby()) {
             head.setScaleX(1.4F);
             head.setScaleY(1.4F);
             head.setScaleZ(1.4F);

@@ -26,12 +26,12 @@ public class GiraffeModel extends GeoModel<Giraffe> {
 
     @Override
     public ResourceLocation getAnimationResource(Giraffe giraffe) {
-        return new ResourceLocation(Naturalist.MOD_ID, "animations/giraffe.animation.json");
+        return new ResourceLocation(Naturalist.MOD_ID, "animations/giraffe.rp_anim.json");
     }
 
     @Override
-    public void setCustomAnimations(Giraffe animatable, long instanceId, AnimationState<Giraffe> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
+    public void setCustomAnimations(Giraffe entity, long instanceId, AnimationState<Giraffe> animationState) {
+        super.setCustomAnimations(entity, instanceId, animationState);
 
         if (animationState == null) return;
 
@@ -39,7 +39,7 @@ public class GiraffeModel extends GeoModel<Giraffe> {
         EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         CoreGeoBone head = this.getAnimationProcessor().getBone("head");
 
-        if (animatable.isBaby()) {
+        if (entity.isBaby()) {
             head.setScaleX(1.3F);
             head.setScaleY(1.3F);
             head.setScaleZ(1.3F);

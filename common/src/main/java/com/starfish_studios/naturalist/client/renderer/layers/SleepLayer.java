@@ -26,14 +26,14 @@ public class SleepLayer<T extends LivingEntity & GeoAnimatable> extends GeoRende
     }
 
     @Override
-    public void render(PoseStack poseStack, T animatable, BakedGeoModel bakedModel, RenderType renderType,
+    public void render(PoseStack poseStack, T entity, BakedGeoModel bakedModel, RenderType renderType,
                        MultiBufferSource bufferSource, VertexConsumer buffer, float partialTicks,
                        int packedLightIn, int packedOverlay) {
 
-        if (animatable.isSleeping()) {
+        if (entity.isSleeping()) {
             RenderType renderLayer = RenderType.entityCutoutNoCull(sleepLayer);
             // poseStack.pushPose();
-            getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, renderLayer, bufferSource.getBuffer(renderLayer), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            getRenderer().reRender(getDefaultBakedModel(entity), poseStack, bufferSource, entity, renderLayer, bufferSource.getBuffer(renderLayer), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
             // poseStack.popPose();
         }
     }

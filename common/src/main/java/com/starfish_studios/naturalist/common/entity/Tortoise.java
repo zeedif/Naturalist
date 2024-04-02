@@ -345,7 +345,7 @@ public class Tortoise extends TamableAnimal implements GeoEntity, HidingAnimal, 
 
     @Override
     public Block getEggBlock() {
-        return NaturalistBlocks.TORTOISE_EGG.get();
+        return NaturalistRegistry.TORTOISE_EGG.get();
     }
 
     @Override

@@ -23,12 +23,12 @@ public class BearShearedLayer extends GeoRenderLayer<Bear> {
     }
 
     @Override
-    public void render(PoseStack poseStack, Bear animatable, BakedGeoModel bakedModel, RenderType renderType,
+    public void render(PoseStack poseStack, Bear entity, BakedGeoModel bakedModel, RenderType renderType,
                        MultiBufferSource bufferSource, VertexConsumer buffer, float partialTicks,
                        int packedLightIn, int packedOverlay) {
-        if (animatable.isSheared()) {
+        if (entity.isSheared()) {
             RenderType renderLayer = RenderType.entityCutoutNoCull(LAYER);
-            getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, renderLayer, bufferSource.getBuffer(renderLayer), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            getRenderer().reRender(getDefaultBakedModel(entity), poseStack, bufferSource, entity, renderLayer, bufferSource.getBuffer(renderLayer), partialTicks, packedLightIn, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
         }
     }
 }

@@ -4,9 +4,9 @@ import com.google.common.base.Preconditions;
 import com.starfish_studios.naturalist.Naturalist;
 import com.starfish_studios.naturalist.common.entity.*;
 import com.starfish_studios.naturalist.core.registry.fabric.NaturalistConfigFabric;
-import com.starfish_studios.naturalist.core.registry.NaturalistBlocks;
+import com.starfish_studios.naturalist.core.registry.NaturalistRegistry;
 import com.starfish_studios.naturalist.core.registry.NaturalistEntityTypes;
-import com.starfish_studios.naturalist.core.registry.NaturalistItems;
+import com.starfish_studios.naturalist.core.registry.NaturalistRegistry;
 import com.starfish_studios.naturalist.core.registry.NaturalistTags;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
@@ -45,8 +45,7 @@ public class NaturalistFabric implements ModInitializer {
         Naturalist.registerSpawnPlacements();
         Naturalist.registerDispenserBehaviors();
 
-        NaturalistBlocks.addAllToCreativeTab();
-        NaturalistItems.addAllToCreativeTab();
+        NaturalistRegistry.addAllToCreativeTab();
     }
 
 
@@ -118,9 +117,12 @@ public class NaturalistFabric implements ModInitializer {
         FabricDefaultAttributeRegistry.register(NaturalistEntityTypes.LIZARD_TAIL.get(), LizardTail.createAttributes());
         FabricDefaultAttributeRegistry.register(NaturalistEntityTypes.TORTOISE.get(), Tortoise.createAttributes());
         FabricDefaultAttributeRegistry.register(NaturalistEntityTypes.DUCK.get(), Duck.createAttributes());
-        // FabricDefaultAttributeRegistry.register(NaturalistEntityTypes.HYENA.get(), Hyena.createAttributes());
-        // FabricDefaultAttributeRegistry.register(NaturalistEntityTypes.OSTRICH.get(), Ostrich.createAttributes());
-        // FabricDefaultAttributeRegistry.register(NaturalistEntityTypes.TERMITE.get(), Termite.createAttributes());
+
+        FabricDefaultAttributeRegistry.register(NaturalistEntityTypes.TOUCAN.get(), Toucan.createAttributes());
+        FabricDefaultAttributeRegistry.register(NaturalistEntityTypes.CRAB.get(), Crab.createAttributes());
+        FabricDefaultAttributeRegistry.register(NaturalistEntityTypes.MOOSE.get(), Moose.createAttributes());
+        FabricDefaultAttributeRegistry.register(NaturalistEntityTypes.CAPYBARA.get(), Capybara.createAttributes());
+        FabricDefaultAttributeRegistry.register(NaturalistEntityTypes.EMPEROR_PENGUIN.get(), EmperorPenguin.createAttributes());
     }
 
     void addSpawns() {

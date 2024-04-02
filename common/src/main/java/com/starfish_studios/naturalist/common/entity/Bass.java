@@ -31,7 +31,7 @@ public class Bass extends AbstractSchoolingFish implements GeoEntity {
 
     @Override
     public ItemStack getBucketItemStack() {
-        return new ItemStack(NaturalistItems.BASS_BUCKET.get());
+        return new ItemStack(NaturalistRegistry.BASS_BUCKET.get());
     }
 
     @Override

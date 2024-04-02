@@ -1,6 +1,6 @@
 //package com.starfish_studios.naturalist.item;
 //
-//import com.starfish_studios.naturalist.core.registry.NaturalistItems;
+//import com.starfish_studios.naturalist.core.registry.NaturalistRegistry;
 //import net.minecraft.sounds.SoundEvent;
 //import net.minecraft.sounds.SoundEvents;
 //import net.minecraft.util.LazyLoadedValue;
@@ -13,7 +13,7 @@
 //
 //public enum NaturalistArmorMaterials implements ArmorMaterial {
 //    REPTILE("reptile", 9, new int[]{1,4,4,1}, 12, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> {
-//        return Ingredient.of(NaturalistItems.REPTILE_SKIN.get());
+//        return Ingredient.of(NaturalistRegistry.REPTILE_SKIN.get());
 //    })
 //    ;
 //

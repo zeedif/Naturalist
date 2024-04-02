@@ -133,7 +133,7 @@ public class Caterpillar extends ClimbingAnimal implements GeoEntity, Catchable 
     }
 
     public ItemStack getHandItemStack() {
-        return new ItemStack(NaturalistItems.CATERPILLAR.get());
+        return new ItemStack(NaturalistRegistry.CATERPILLAR.get());
     }
 
 
@@ -190,7 +190,7 @@ public class Caterpillar extends ClimbingAnimal implements GeoEntity, Catchable 
     }
 
     public ItemStack getCaughtItemStack() {
-        return new ItemStack(NaturalistItems.CATERPILLAR.get());
+        return new ItemStack(NaturalistRegistry.CATERPILLAR.get());
     }
 
     @Override
@@ -245,10 +245,10 @@ public class Caterpillar extends ClimbingAnimal implements GeoEntity, Catchable 
             Level level = caterpillar.level();
             if (this.isValidTarget(level, caterpillar.blockPosition())) {
                 if (!level.isClientSide) {
-                    ((ServerLevel) level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, NaturalistBlocks.CHRYSALIS.get().defaultBlockState()), caterpillar.getX(), caterpillar.getY(), caterpillar.getZ(), 50, caterpillar.getBbWidth() / 4.0F, caterpillar.getBbHeight() / 4.0F, caterpillar.getBbWidth() / 4.0F, 0.05D);
+                    ((ServerLevel) level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, NaturalistRegistry.CHRYSALIS_BLOCK.get().defaultBlockState()), caterpillar.getX(), caterpillar.getY(), caterpillar.getZ(), 50, caterpillar.getBbWidth() / 4.0F, caterpillar.getBbHeight() / 4.0F, caterpillar.getBbWidth() / 4.0F, 0.05D);
                 }
                 caterpillar.discard();
-                level.setBlockAndUpdate(caterpillar.blockPosition(), NaturalistBlocks.CHRYSALIS.get().defaultBlockState().setValue(ChrysalisBlock.FACING, facing));
+                level.setBlockAndUpdate(caterpillar.blockPosition(), NaturalistRegistry.CHRYSALIS_BLOCK.get().defaultBlockState().setValue(ChrysalisBlock.FACING, facing));
                 level.playSound(null, caterpillar.blockPosition(), SoundEvents.GRASS_PLACE, SoundSource.BLOCKS, 0.7F, 0.9F + level.random.nextFloat() * 0.2F);
             }
         }

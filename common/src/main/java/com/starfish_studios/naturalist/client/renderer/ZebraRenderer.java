@@ -25,13 +25,13 @@ public class ZebraRenderer extends AbstractHorseRenderer<Zebra, ZebraModel> {
     }
 
     @Override
-    public void render(Zebra animatable, float entityYaw, float partialTick, PoseStack poseStack, net.minecraft.client.renderer.MultiBufferSource bufferSource, int packedLight) {
-        if (animatable.isBaby()) {
+    public void render(Zebra entity, float entityYaw, float partialTick, PoseStack poseStack, net.minecraft.client.renderer.MultiBufferSource bufferSource, int packedLight) {
+        if (entity.isBaby()) {
             poseStack.scale(0.8F, 0.8F, 0.8F);
         }
         else {
             poseStack.scale(0.8F, 0.8F, 0.8F);
         }
-        super.render(animatable, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }

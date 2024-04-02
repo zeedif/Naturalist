@@ -16,17 +16,17 @@ import java.util.Set;
 
 public class NaturalistClient {
     public static void init() {
-        ClientPlatformHelper.setRenderLayer(NaturalistBlocks.CHRYSALIS, RenderType.cutout());
-        ClientPlatformHelper.setRenderLayer(NaturalistBlocks.AZURE_FROGLASS, RenderType.translucent());
-        ClientPlatformHelper.setRenderLayer(NaturalistBlocks.AZURE_FROGLASS_PANE, RenderType.translucent());
-        ClientPlatformHelper.setRenderLayer(NaturalistBlocks.VERDANT_FROGLASS, RenderType.translucent());
-        ClientPlatformHelper.setRenderLayer(NaturalistBlocks.VERDANT_FROGLASS_PANE, RenderType.translucent());
-        ClientPlatformHelper.setRenderLayer(NaturalistBlocks.CRIMSON_FROGLASS, RenderType.translucent());
-        ClientPlatformHelper.setRenderLayer(NaturalistBlocks.CRIMSON_FROGLASS_PANE, RenderType.translucent());
-        ClientPlatformHelper.setRenderLayer(NaturalistBlocks.SNAIL_EGGS, RenderType.cutout());
+        ClientPlatformHelper.setRenderLayer(NaturalistRegistry.CHRYSALIS_BLOCK, RenderType.cutout());
+        ClientPlatformHelper.setRenderLayer(NaturalistRegistry.AZURE_FROGLASS, RenderType.translucent());
+        ClientPlatformHelper.setRenderLayer(NaturalistRegistry.AZURE_FROGLASS_PANE, RenderType.translucent());
+        ClientPlatformHelper.setRenderLayer(NaturalistRegistry.VERDANT_FROGLASS, RenderType.translucent());
+        ClientPlatformHelper.setRenderLayer(NaturalistRegistry.VERDANT_FROGLASS_PANE, RenderType.translucent());
+        ClientPlatformHelper.setRenderLayer(NaturalistRegistry.CRIMSON_FROGLASS, RenderType.translucent());
+        ClientPlatformHelper.setRenderLayer(NaturalistRegistry.CRIMSON_FROGLASS_PANE, RenderType.translucent());
+        ClientPlatformHelper.setRenderLayer(NaturalistRegistry.SNAIL_EGGS, RenderType.cutout());
 
-        ClientPlatformHelper.setRenderLayer(NaturalistBlocks.CATTAIL, RenderType.cutout());
-        ClientPlatformHelper.setRenderLayer(NaturalistBlocks.DUCKWEED, RenderType.cutout());
+        ClientPlatformHelper.setRenderLayer(NaturalistRegistry.CATTAIL, RenderType.cutout());
+        ClientPlatformHelper.setRenderLayer(NaturalistRegistry.DUCKWEED_BLOCK, RenderType.cutout());
 
         ClientPlatformHelper.registerEntityRenderers(NaturalistEntityTypes.SNAIL, SnailRenderer::new);
         ClientPlatformHelper.registerEntityRenderers(NaturalistEntityTypes.BEAR, BearRenderer::new);
@@ -64,8 +64,10 @@ public class NaturalistClient {
         ClientPlatformHelper.registerEntityRenderers(NaturalistEntityTypes.TORTOISE, TortoiseRenderer::new);
         ClientPlatformHelper.registerEntityRenderers(NaturalistEntityTypes.DUCK, DuckRenderer::new);
 
-        // Set<Item> particleMarkerBlocks = new HashSet<>(ClientLevelMixin.getMARKER_PARTICLE_ITEMS());
-        // particleMarkerBlocks.add(NaturalistItems.GLOW_GOOP.get());
-        // ClientLevelMixin.setMARKER_PARTICLE_ITEMS(particleMarkerBlocks);
+        ClientPlatformHelper.registerEntityRenderers(NaturalistEntityTypes.TOUCAN, ToucanRenderer::new);
+        ClientPlatformHelper.registerEntityRenderers(NaturalistEntityTypes.CRAB, CrabRenderer::new);
+        ClientPlatformHelper.registerEntityRenderers(NaturalistEntityTypes.MOOSE, MooseRenderer::new);
+        ClientPlatformHelper.registerEntityRenderers(NaturalistEntityTypes.CAPYBARA, CapybaraRenderer::new);
+        ClientPlatformHelper.registerEntityRenderers(NaturalistEntityTypes.EMPEROR_PENGUIN, EmperorPenguinRenderer::new);
     }
 }

@@ -239,7 +239,7 @@ public class Butterfly extends Animal implements GeoEntity, FlyingAnimal, Catcha
     }
 
     public ItemStack getCaughtItemStack() {
-        return new ItemStack(NaturalistItems.BUTTERFLY.get());
+        return new ItemStack(NaturalistRegistry.BUTTERFLY.get());
     }
 
     @Override
@@ -342,7 +342,7 @@ public class Butterfly extends Animal implements GeoEntity, FlyingAnimal, Catcha
 
         @Override
         protected boolean isValidTarget(LevelReader pLevel, BlockPos pPos) {
-            return pLevel.getBlockState(pPos).is(BlockTags.FLOWERS) || pLevel.getBlockState(pPos).is(NaturalistBlocks.CATTAIL.get());
+            return pLevel.getBlockState(pPos).is(BlockTags.FLOWERS) || pLevel.getBlockState(pPos).is(NaturalistRegistry.CATTAIL.get());
         }
 
         @Override

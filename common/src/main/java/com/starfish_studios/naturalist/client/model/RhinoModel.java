@@ -30,8 +30,8 @@ public class RhinoModel extends GeoModel<Rhino> {
     }
 
     @Override
-    public void setCustomAnimations(Rhino animatable, long instanceId, AnimationState<Rhino> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
+    public void setCustomAnimations(Rhino entity, long instanceId, AnimationState<Rhino> animationState) {
+        super.setCustomAnimations(entity, instanceId, animationState);
 
         if (animationState == null) return;
 
@@ -43,7 +43,7 @@ public class RhinoModel extends GeoModel<Rhino> {
         CoreGeoBone leftEar = this.getAnimationProcessor().getBone("left_ear");
         CoreGeoBone rightEar = this.getAnimationProcessor().getBone("right_ear");
 
-        if (animatable.isBaby()) {
+        if (entity.isBaby()) {
             head.setScaleX(1.4F);
             head.setScaleY(1.4F);
             head.setScaleZ(1.4F);
@@ -65,12 +65,12 @@ public class RhinoModel extends GeoModel<Rhino> {
             rightEar.setScaleZ(1.0F);
         }
 
-        if (!animatable.isSprinting()) {
+        if (!entity.isSprinting()) {
             head.setRotY(extraDataOfType.netHeadYaw() * Mth.DEG_TO_RAD);
         }
 
-        bigHorn.setHidden(animatable.isBaby());
-        smallHorn.setHidden(animatable.isBaby());
-        babyHorn.setHidden(!animatable.isBaby());
+        bigHorn.setHidden(entity.isBaby());
+        smallHorn.setHidden(entity.isBaby());
+        babyHorn.setHidden(!entity.isBaby());
     }
 }

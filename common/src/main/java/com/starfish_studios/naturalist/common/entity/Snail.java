@@ -106,7 +106,7 @@ public class Snail extends ClimbingAnimal implements GeoEntity, Bucketable, Hidi
 
     @Override
     public Block getEggBlock() {
-        return NaturalistBlocks.SNAIL_EGGS.get();
+        return NaturalistRegistry.SNAIL_EGGS.get();
     }
 
     @Override
@@ -349,7 +349,7 @@ public class Snail extends ClimbingAnimal implements GeoEntity, Bucketable, Hidi
 
     @Override
     public ItemStack getBucketItemStack() {
-        return new ItemStack(NaturalistItems.SNAIL_BUCKET.get());
+        return new ItemStack(NaturalistRegistry.SNAIL_BUCKET.get());
     }
 
     @Override
